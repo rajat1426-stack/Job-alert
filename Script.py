@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import requests
 import json
@@ -5,8 +6,8 @@ from bs4 import BeautifulSoup
 from jobspy import scrape_jobs
 from openai import OpenAI
 
-client = OpenAI(api_key="YOUR_OPENAI_API_KEY")
-WEBHOOK_URL = "https://discord.com/api/webhooks/1551965226683867226/AgkGzBLs3ydhnXSUr_MDpVg-vlC9gV8QibX-2Saznoosw764F3XzBXnOaxdll7451jok"
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+WEBHOOK_URL = os.environ.get("https://discord.com/api/webhooks/1551965226683867226/AgkGzBLs3ydhnXSUr_MDpVg-vlC9gV8QibX-2Saznoosw764F3XzBXnOaxdll7451jok")
 
 def scrape_tum_hiwi():
     """Scrapes the TUM Schwarzes Brett for student assistant positions."""
