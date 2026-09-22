@@ -1,0 +1,32 @@
+name: Munich Geospatial Job Alert
+
+on:
+  schedule:
+    # Runs Monday through Friday at 06:00 UTC (08:00 AM Munich CEST)
+    - cron: '0 6 * * 1-5'
+  workflow_dispatch: # Enables a manual run button for testing
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Job Scraper
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: python Script.py
